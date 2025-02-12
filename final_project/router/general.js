@@ -60,15 +60,8 @@ public_users.get('/title/:title',function (req, res) {
 
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
-    const reviews = books[isbnParam]["reviews"];
-// Get the book reviews based on ISBN provided in the request parameters
-    const reviews = books[isbnParam];
-    if (!reviews) {
-      res.status(404).json({ message: 'No reviews found for the ISBN provided' });
-    } else {
-      res.status(200).json(reviews);
-    }
-
-});
+    const isbn = req.params.isbn;
+    res.send(books[isbn]["reviews"])
+  });
 
 module.exports.general = public_users;
