@@ -6,26 +6,31 @@ const public_users = express.Router();
 
 // Register a new user
 public_users.post("/register", (req,res) => {
+    //Write your code here
     const username = req.body.username;
     const password = req.body.password;
-  // Check if both username and password are provided
-  if (username && password) {
-    if (!isValid(username)) {
+    
+    if (username && password) {
+      if (!isValid(username)) {
         users.push({"username":username, "password":password});
         return res.status(200).json({message: "User successfully registered. Now you can login"});
-        } else {
-            return res.status(404).json({message: "User already exists!"});
-        }
+      } else {
+        return res.status(404).json({message: "User already exists!"});
+      }
     }
-    // Return error if username or password is missing
     return res.status(404).json({message: "Unable to register user."});
-});
-
-// Get the book list available in the shop
-public_users.get('/',function (req, res) {
-    res.send(JSON.stringify({books}, null, 4));
   });
 
+// Get the book list available in the shop
+public_users.get('/books',function (req, res) {
+
+    const get_books = new Promise((resolve, reject) => {
+        resolve(res.send(JSON.stringify({books}, null, 4)));
+      });
+
+      get_books.then(() => console.log("Promise for Task 10 resolved"));
+
+  });
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
     const isbn = req.params.isbn;
